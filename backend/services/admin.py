@@ -1,3 +1,6 @@
-from django.contrib import admin
+# services/admin.py
 
-# Register your models here.
+from django.contrib import admin
+from .models import ServiceCategory
+
+admin.site.register(ServiceCategory)
