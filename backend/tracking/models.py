@@ -73,3 +73,25 @@ class WorkerAssignment(models.Model):
 
     def __str__(self):
         return f"{self.worker.username} -> {self.request.title}"
+    
+class WorkerLocation(models.Model):
+
+    worker = models.OneToOneField(
+        WorkerProfile,
+        on_delete=models.CASCADE,
+        related_name="location"
+    )
+
+    latitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6
+    )
+
+    longitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6
+    )
+
+    last_updated = models.DateTimeField(
+        auto_now=True
+    )

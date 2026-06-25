@@ -1,3 +1,4 @@
+from core.permissions import IsCustomer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
@@ -22,8 +23,10 @@ class ServiceCategoryListView(
 class ServiceRequestCreateView(generics.CreateAPIView):
 
     serializer_class = ServiceRequestSerializer
-    permission_classes = [IsAuthenticated]
-
+    permission_classes = [
+        IsAuthenticated,
+        IsCustomer
+    ]
     def perform_create(self, serializer):
 
         request = serializer.save(
@@ -35,14 +38,18 @@ class ServiceRequestCreateView(generics.CreateAPIView):
         )
 
         logger.info(
-            "Found %s matching workers.",
+            "Request %s matched with %s workers",
+            request.id,
             matching_workers.count()
         )
     
 class MyServiceRequestListView(generics.ListAPIView):
 
     serializer_class = ServiceRequestSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [
+        IsAuthenticated,
+        IsCustomer
+    ]
 
     def get_queryset(self):
         return (
@@ -61,7 +68,10 @@ class MyServiceRequestListView(generics.ListAPIView):
 class ServiceRequestDetailView(generics.RetrieveAPIView):
 
     serializer_class = ServiceRequestSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [
+        IsAuthenticated,
+        IsCustomer
+    ]
 
     def get_queryset(self):
         return (
@@ -79,4 +89,7 @@ class ServiceRequestDetailView(generics.RetrieveAPIView):
 class RequestImageUploadView(generics.CreateAPIView):
 
     serializer_class = RequestImageUploadSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [
+        IsAuthenticated,
+        IsCustomer
+    ]

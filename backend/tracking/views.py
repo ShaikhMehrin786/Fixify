@@ -1,12 +1,10 @@
-from django.utils import timezone
-
-from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 
-from services.models import ServiceRequest
-from .models import WorkerAssignment
+from .services import AssignmentService
+
 
 class AcceptJobView(APIView):
 
@@ -14,49 +12,24 @@ class AcceptJobView(APIView):
 
     def post(self, request, pk):
 
-        worker = request.user
-
         try:
-            service_request = ServiceRequest.objects.get(
-                pk=pk,
-                status="PENDING"
+            assignment = AssignmentService.accept_job(
+                request.user,
+                pk
             )
-
-        except ServiceRequest.DoesNotExist:
 
             return Response(
                 {
-                    "message":
-                    "Request already accepted."
-                },
-                status=status.HTTP_404_NOT_FOUND
+                    "message": "Job accepted successfully.",
+                    "assignment_id": assignment.id,
+                    "start_otp": assignment.start_otp
+                }
             )
 
-        assignment = WorkerAssignment.objects.create(
-
-            worker=worker,
-
-            request=service_request,
-
-            status="ACCEPTED",
-
-            accepted_at=timezone.now()
-
-        )
-
-        service_request.status = "ACCEPTED"
-
-        service_request.save()
-
-        return Response(
-            {
-                "message":
-                "Job accepted successfully.",
-
-                "assignment_id":
-                assignment.id,
-
-                "start_otp":
-                assignment.start_otp
-            }
-        )
+        except Exception:
+            return Response(
+                {
+                    "message": "Job is no longer available."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
