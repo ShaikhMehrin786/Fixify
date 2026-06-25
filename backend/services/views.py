@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from .models import ServiceCategory,ServiceRequest
 from .serializers import RequestImageUploadSerializer,ServiceCategorySerializer,ServiceRequestSerializer
 from workers.services import WorkerMatchingService  
-from .serializers import WorkerLocationSerializer
-from .services import LocationService
+from tracking.serializers import WorkerLocationSerializer
+from tracking.services import LocationService
 import logging
 
 logger = logging.getLogger(__name__)
