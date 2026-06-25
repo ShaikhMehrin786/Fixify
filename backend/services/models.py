@@ -24,23 +24,28 @@ from django.conf import settings
 
 
 class ServiceRequest(models.Model):
+    class Meta:
+        indexes = [
+            models.Index(fields=["status"]),
+            models.Index(fields=["priority"]),
+            models.Index(fields=["preferred_date"]),
+            models.Index(fields=["customer"]),
+        ]
 
-    STATUS_CHOICES = [
-        ("PENDING", "Pending"),
-        ("ACCEPTED", "Accepted"),
-        ("ON_THE_WAY", "On The Way"),
-        ("ARRIVED", "Arrived"),
-        ("IN_PROGRESS", "In Progress"),
-        ("COMPLETED", "Completed"),
-        ("CANCELLED", "Cancelled"),
-    ]
+    class RequestStatus(models.TextChoices):
+        PENDING = "PENDING", "Pending"
+        ACCEPTED = "ACCEPTED", "Accepted"
+        ON_THE_WAY = "ON_THE_WAY", "On The Way"
+        ARRIVED = "ARRIVED", "Arrived"
+        IN_PROGRESS = "IN_PROGRESS", "In Progress"
+        COMPLETED = "COMPLETED", "Completed"
+        CANCELLED = "CANCELLED", "Cancelled"
 
-    PRIORITY_CHOICES = [
-        ("NORMAL", "Normal"),
-        ("URGENT", "Urgent"),
-        ("EMERGENCY", "Emergency"),
-    ]
-
+    class RequestPriority(models.TextChoices):
+        NORMAL = "NORMAL", "Normal"
+        URGENT = "URGENT", "Urgent"
+        EMERGENCY = "EMERGENCY", "Emergency"
+    
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -50,6 +55,7 @@ class ServiceRequest(models.Model):
     category = models.ForeignKey(
         ServiceCategory,
         on_delete=models.SET_NULL,
+        related_name="requests",
         null=True,
         blank=True
     )
@@ -80,14 +86,14 @@ class ServiceRequest(models.Model):
 
     priority = models.CharField(
         max_length=20,
-        choices=PRIORITY_CHOICES,
-        default="NORMAL"
+        choices=RequestPriority.choices,
+        default=RequestPriority.NORMAL
     )
 
     status = models.CharField(
         max_length=20,
-        choices=STATUS_CHOICES,
-        default="PENDING"
+        choices=RequestStatus.choices,
+        default=RequestStatus.PENDING
     )
 
     ai_predicted_category = models.CharField(
@@ -117,5 +123,42 @@ class ServiceRequest(models.Model):
         auto_now=True
     )
 
+    ai_confidence = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+    
+    estimated_arrival = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    cancellation_reason = models.TextField(
+        blank=True,
+        null=True
+    )
+
     def __str__(self):
         return f"{self.customer.username} - {self.title}"
+   
+    
+class RequestImage(models.Model):
+
+    request = models.ForeignKey(
+        ServiceRequest,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
+
+    image = models.ImageField(
+        upload_to="service_requests/"
+    )
+
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"Image for Request #{self.request.id}"
