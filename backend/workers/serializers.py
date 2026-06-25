@@ -1,9 +1,35 @@
 from rest_framework import serializers
-from .models import WorkerSkill
+
+from services.models import ServiceRequest
 
 
-class WorkerSkillSerializer(serializers.ModelSerializer):
+class AvailableJobSerializer(serializers.ModelSerializer):
+
+    customer_name = serializers.CharField(
+        source="customer.username",
+        read_only=True
+    )
+
+    category_name = serializers.CharField(
+        source="category.name",
+        read_only=True
+    )
 
     class Meta:
-        model = WorkerSkill
-        fields = '__all__'
+        model = ServiceRequest
+
+        fields = [
+            "id",
+            "title",
+            "description",
+            "customer_name",
+            "category_name",
+            "priority",
+            "service_address",
+            "latitude",
+            "longitude",
+            "preferred_date",
+            "preferred_time",
+            "status",
+            "created_at",
+        ]

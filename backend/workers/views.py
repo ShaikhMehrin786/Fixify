@@ -1,12 +1,33 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
-from .models import WorkerSkill
-from .serializers import WorkerSkillSerializer
+from services.models import ServiceRequest
+
+from .serializers import AvailableJobSerializer
 
 
-class WorkerSkillListCreateView(
-    generics.ListCreateAPIView
-):
+class AvailableJobsView(generics.ListAPIView):
 
-    queryset = WorkerSkill.objects.all()
-    serializer_class = WorkerSkillSerializer
+    serializer_class = AvailableJobSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+
+        worker = self.request.user.worker_profile
+
+        categories = worker.skills.values_list(
+            "category",
+            flat=True
+        )
+
+        return (
+            ServiceRequest.objects.filter(
+                category_id__in=categories,
+                status="PENDING"
+            )
+            .select_related(
+                "customer",
+                "category"
+            )
+            .order_by("-created_at")
+        )

@@ -1,7 +1,10 @@
 from django.db import models
 from django.conf import settings
 from services.models import ServiceRequest
+import random
 
+def generate_otp():
+    return str(random.randint(100000, 999999))
 
 class AssignmentStatus(models.TextChoices):
     ASSIGNED = "ASSIGNED", "Assigned"
@@ -57,14 +60,12 @@ class WorkerAssignment(models.Model):
 
     start_otp = models.CharField(
         max_length=6,
-        blank=True,
-        null=True
+        default=generate_otp
     )
 
     completion_otp = models.CharField(
         max_length=6,
-        blank=True,
-        null=True
+        default=generate_otp
     )
 
     class Meta:

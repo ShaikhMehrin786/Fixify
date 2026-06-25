@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import WorkerSkillListCreateView
+
+from .views import AvailableJobsView
 
 urlpatterns = [
+
     path(
-        'skills/',
-        WorkerSkillListCreateView.as_view(),
-        name='worker_skills'
+        "available-jobs/",
+        AvailableJobsView.as_view(),
+        name="available_jobs"
     ),
 ]
