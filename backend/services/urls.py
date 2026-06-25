@@ -32,4 +32,10 @@ urlpatterns = [
         RequestImageUploadView.as_view(),
         name="request_image_upload"
     ),
+
+    path(
+        "location/update/",
+        UpdateLocationView.as_view(),
+        name="update_location"
+    ),
 ]

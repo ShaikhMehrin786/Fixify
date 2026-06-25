@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from services.models import ServiceRequest
 import random
+from accounts.models import WorkerProfile
 
 def generate_otp():
     return str(random.randint(100000, 999999))
@@ -95,3 +96,46 @@ class WorkerLocation(models.Model):
     last_updated = models.DateTimeField(
         auto_now=True
     )
+
+
+class WorkerLocation(models.Model):
+
+    worker = models.OneToOneField(
+        WorkerProfile,
+        on_delete=models.CASCADE,
+        related_name="location"
+    )
+
+    latitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6
+    )
+
+    longitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6
+    )
+
+    speed = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0
+    )
+
+    heading = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=0
+    )
+
+    last_updated = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["worker"]),
+        ]
+
+    def __str__(self):
+        return self.worker.user.username

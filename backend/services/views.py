@@ -1,13 +1,14 @@
+from core.permissions import IsWorker
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from core.permissions import IsCustomer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-
 from .models import ServiceCategory,ServiceRequest
-
 from .serializers import RequestImageUploadSerializer,ServiceCategorySerializer,ServiceRequestSerializer
-
 from workers.services import WorkerMatchingService  
-
+from .serializers import WorkerLocationSerializer
+from .services import LocationService
 import logging
 
 logger = logging.getLogger(__name__)
@@ -93,3 +94,24 @@ class RequestImageUploadView(generics.CreateAPIView):
         IsAuthenticated,
         IsCustomer
     ]
+
+class UpdateLocationView(APIView):
+
+    permission_classes = [
+        IsAuthenticated,
+        IsWorker
+    ]
+
+    def post(self, request):
+
+        serializer = WorkerLocationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        location = LocationService.update_location(
+            request.user.worker_profile,
+            serializer.validated_data
+        )
+
+        return Response(
+            WorkerLocationSerializer(location).data
+        )
