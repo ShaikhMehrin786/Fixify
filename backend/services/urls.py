@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import MyServiceRequestListView, RequestImageUploadView, ServiceCategoryListView,ServiceRequestCreateView, ServiceRequestDetailView
+from .views import MyServiceRequestListView, RequestImageUploadView, ServiceCategoryListView,ServiceRequestCreateView, ServiceRequestDetailView, UpdateLocationView
 
 urlpatterns = [
 

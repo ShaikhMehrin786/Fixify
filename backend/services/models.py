@@ -1,6 +1,20 @@
 from django.db import models
 
+class RequestStatus(models.TextChoices):
+    PENDING = "PENDING", "Pending"
 
+    ACCEPTED = "ACCEPTED", "Accepted"
+
+    ON_THE_WAY = "ON_THE_WAY", "On The Way"
+
+    ARRIVED = "ARRIVED", "Arrived"
+
+    IN_PROGRESS = "IN_PROGRESS", "In Progress"
+
+    COMPLETED = "COMPLETED", "Completed"
+
+    CANCELLED = "CANCELLED", "Cancelled"
+    
 class ServiceCategory(models.Model):
 
     name = models.CharField(

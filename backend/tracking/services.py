@@ -48,3 +48,25 @@ class LocationService:
         )
 
         return location
+    
+class JobStatusService:
+
+    @staticmethod
+    def update_status(service_request, assignment, new_status):
+
+        assignment.status = new_status
+        service_request.status = new_status
+
+        if new_status == "ON_THE_WAY":
+            assignment.started_at = timezone.now()
+
+        elif new_status == "ARRIVED":
+            assignment.arrived_at = timezone.now()
+
+        elif new_status == "COMPLETED":
+            assignment.completed_at = timezone.now()
+
+        assignment.save()
+        service_request.save()
+
+        return assignment
