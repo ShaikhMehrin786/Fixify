@@ -1,10 +1,35 @@
 from django.urls import path
-from .views import ServiceCategoryListView
+from .views import MyServiceRequestListView, RequestImageUploadView, ServiceCategoryListView,ServiceRequestCreateView, ServiceRequestDetailView
 
 urlpatterns = [
+
     path(
-        'categories/',
+        "categories/",
         ServiceCategoryListView.as_view(),
-        name='service_categories'
+        name="categories"
+    ),
+
+    path(
+        "requests/",
+        ServiceRequestCreateView.as_view(),
+        name="create_request"
+    ),
+    
+    path(
+    "requests/my/",
+    MyServiceRequestListView.as_view(),
+    name="my_requests"
+    ),
+
+    path(
+        "requests/<int:pk>/",
+        ServiceRequestDetailView.as_view(),
+        name="request_detail"
+    ),
+
+    path(
+        "request-images/",
+        RequestImageUploadView.as_view(),
+        name="request_image_upload"
     ),
 ]
