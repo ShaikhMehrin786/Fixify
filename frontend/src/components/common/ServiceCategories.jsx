@@ -51,7 +51,6 @@ function ServiceCategories(){
     try{
 
         const data = await getCategories();
-
         setCategories(data);
 
     }

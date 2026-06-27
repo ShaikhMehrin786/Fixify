@@ -1,0 +1,568 @@
+/* ==========================================
+   LARGE DESKTOP (1400px)
+========================================== */
+
+@media (max-width:1400px){
+
+.container{
+
+max-width:1140px;
+
+}
+
+.hero-title{
+
+font-size:64px;
+
+}
+
+}
+
+
+/* ==========================================
+   DESKTOP (1200px)
+========================================== */
+
+@media (max-width:1200px){
+
+.container{
+
+max-width:960px;
+
+padding:0 20px;
+
+}
+
+section{
+
+padding:90px 0;
+
+}
+
+.hero-title{
+
+font-size:56px;
+
+}
+
+.section-title{
+
+font-size:42px;
+
+}
+
+.service-card,
+.why-card,
+.step-card,
+.review-card,
+.stat-card{
+
+padding:30px;
+
+}
+
+}
+
+
+/* ==========================================
+   TABLET (992px)
+========================================== */
+
+@media (max-width:992px){
+
+.container{
+
+max-width:720px;
+
+padding:0 18px;
+
+}
+
+/* Navbar */
+
+.navbar{
+
+padding:15px 0;
+
+}
+
+.nav-links{
+
+display:none;
+
+}
+
+.auth-buttons{
+
+display:none;
+
+}
+
+.mobile-menu-btn{
+
+display:flex;
+
+}
+
+/* Hero */
+
+.hero-section{
+
+padding:90px 0 70px;
+
+text-align:center;
+
+}
+
+.hero-content{
+
+margin:auto;
+
+}
+
+.hero-title{
+
+font-size:48px;
+
+line-height:1.2;
+
+}
+
+.hero-description{
+
+font-size:18px;
+
+margin:20px auto 35px;
+
+}
+
+.hero-buttons{
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+}
+
+.hero-image{
+
+margin-top:50px;
+
+}
+
+/* Grid */
+
+.row{
+
+row-gap:25px;
+
+}
+
+.service-card,
+.step-card,
+.why-card,
+.review-card{
+
+height:100%;
+
+}
+
+.register-cards{
+
+grid-template-columns:1fr;
+
+gap:25px;
+
+}
+
+.auth-card{
+
+max-width:600px;
+
+margin:auto;
+
+}
+
+.footer-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:35px;
+
+}
+
+}
+
+
+/* ==========================================
+   MOBILE (768px)
+========================================== */
+
+@media (max-width:768px){
+
+.container{
+
+width:100%;
+
+padding:0 18px;
+
+}
+
+section{
+
+padding:70px 0;
+
+}
+
+/* Hero */
+
+.hero-section{
+
+padding:80px 0 60px;
+
+}
+
+.hero-title{
+
+font-size:40px;
+
+line-height:1.2;
+
+}
+
+.hero-description{
+
+font-size:16px;
+
+margin:20px 0 30px;
+
+}
+
+.hero-buttons{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.hero-buttons .btn{
+
+width:100%;
+
+max-width:320px;
+
+}
+
+/* Titles */
+
+.section-title{
+
+font-size:34px;
+
+}
+
+.section-subtitle{
+
+font-size:16px;
+
+}
+
+/* Cards */
+
+.service-card,
+.step-card,
+.why-card,
+.review-card,
+.stat-card{
+
+padding:25px;
+
+}
+
+.service-icon,
+.why-icon,
+.step-icon{
+
+width:65px;
+
+height:65px;
+
+font-size:26px;
+
+}
+
+/* Statistics */
+
+.stat-card h2{
+
+font-size:34px;
+
+}
+
+/* FAQ */
+
+.faq-item{
+
+margin-bottom:15px;
+
+}
+
+.faq-question{
+
+padding:18px;
+
+font-size:16px;
+
+}
+
+.faq-answer{
+
+padding:18px;
+
+}
+
+/* CTA */
+
+.cta-section{
+
+text-align:center;
+
+}
+
+.cta-buttons{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.cta-buttons .btn{
+
+width:100%;
+
+max-width:300px;
+
+}
+
+/* Footer */
+
+.footer{
+
+text-align:center;
+
+}
+
+.footer-grid{
+
+grid-template-columns:1fr;
+
+gap:30px;
+
+}
+
+.footer-social{
+
+justify-content:center;
+
+}
+
+/* Auth */
+
+.auth-card{
+
+padding:35px 25px;
+
+margin:40px auto;
+
+}
+
+.auth-title{
+
+font-size:34px;
+
+}
+
+.register-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.role-card{
+
+padding:28px;
+
+}
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE (576px)
+========================================== */
+
+@media (max-width:576px){
+
+.container{
+
+padding:0 15px;
+
+}
+
+section{
+
+padding:60px 0;
+
+}
+
+/* Hero */
+
+.hero-title{
+
+font-size:34px;
+
+}
+
+.hero-description{
+
+font-size:15px;
+
+}
+
+.hero-buttons .btn{
+
+width:100%;
+
+}
+
+/* Titles */
+
+.section-title{
+
+font-size:30px;
+
+}
+
+.section-subtitle{
+
+font-size:15px;
+
+}
+
+/* Cards */
+
+.service-card,
+.step-card,
+.why-card,
+.review-card,
+.stat-card,
+.role-card{
+
+padding:22px;
+
+}
+
+.service-icon,
+.step-icon,
+.why-icon{
+
+width:60px;
+
+height:60px;
+
+font-size:24px;
+
+}
+
+/* Numbers */
+
+.stat-card h2{
+
+font-size:30px;
+
+}
+
+/* Auth */
+
+.auth-card{
+
+padding:30px 20px;
+
+border-radius:20px;
+
+}
+
+.auth-title{
+
+font-size:30px;
+
+}
+
+.auth-form input{
+
+height:52px;
+
+font-size:15px;
+
+}
+
+.gradient-btn{
+
+height:52px;
+
+font-size:16px;
+
+}
+
+}
+
+
+/* ==========================================
+   EXTRA SMALL DEVICES (400px)
+========================================== */
+
+@media (max-width:400px){
+
+.hero-title{
+
+font-size:30px;
+
+}
+
+.section-title{
+
+font-size:26px;
+
+}
+
+.auth-card{
+
+padding:25px 18px;
+
+}
+
+.role-card{
+
+padding:20px;
+
+}
+
+.footer{
+
+font-size:14px;
+
+}
+
+}

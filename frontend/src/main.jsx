@@ -2,17 +2,32 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-import "./assets/css/global.css";
-
 import App from "./App";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import "./assets/css/variable.css";
+import "./assets/css/global.css";
+import "./assets/css/animations.css";
+
+import "./assets/css/navbar.css";
+import "./assets/css/hero.css";
+import "./assets/css/serviceCategories.css";
+import "./assets/css/statistics.css";
+import "./assets/css/howItWorks.css";
+import "./assets/css/whyChoose.css";
+import "./assets/css/customerReviews.css";
+import "./assets/css/faq.css";
+import "./assets/css/callToAction.css";
+import "./assets/css/footer.css";
+
+import "./assets/css/auth.css";
+import "./assets/css/register.css";
+
+import "./assets/css/responsive.css";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );

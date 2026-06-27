@@ -1,0 +1,39 @@
+.otp-card{
+
+    max-width:470px;
+
+}
+
+.otp-inputs{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:30px 0;
+
+}
+
+.otp-inputs input{
+
+    width:58px;
+
+    height:58px;
+
+    text-align:center;
+
+    font-size:24px;
+
+    border:1px solid #dbe3eb;
+
+    border-radius:14px;
+
+}
+
+.otp-inputs input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+}

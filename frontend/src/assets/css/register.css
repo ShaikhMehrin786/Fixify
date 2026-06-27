@@ -1,0 +1,369 @@
+/* =====================================================
+   REGISTER PAGE
+===================================================== */
+
+.register-wrapper{
+    width:100%;
+    max-width:980px;
+    margin:0 auto;
+    animation:fadeUp .6s ease;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.register-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.register-title h1{
+    font-size:42px;
+    font-weight:700;
+    color:#0f172a;
+    margin-bottom:12px;
+}
+
+.register-title p{
+    font-size:17px;
+    color:#64748b;
+    line-height:1.7;
+}
+
+/* =====================================================
+   ROLE CARDS
+===================================================== */
+
+.register-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,340px);
+
+    justify-content:center;
+
+    gap:30px;
+
+}
+
+.role-card{
+
+    background:#ffffff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:24px;
+
+    padding:32px;
+
+    min-height:390px;
+
+    cursor:pointer;
+
+    transition:.35s ease;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.06);
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.role-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#2563eb;
+
+    box-shadow:0 20px 45px rgba(37,99,235,.15);
+
+}
+
+.role-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:26px;
+
+    margin-bottom:22px;
+
+}
+
+.role-card h3{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:14px;
+
+}
+
+.role-description{
+
+    color:#64748b;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+    margin-bottom:24px;
+
+}
+
+.role-features{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.role-features li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:14px;
+
+    color:#334155;
+
+    font-size:15px;
+
+}
+
+.role-features svg{
+
+    color:#14b8a6;
+
+    font-size:16px;
+
+}
+
+/* Push footer of card naturally */
+.role-features{
+
+    margin-top:auto;
+
+}
+
+/* =====================================================
+   LOGIN LINK
+===================================================== */
+
+.auth-footer{
+
+    margin-top:35px;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:16px;
+
+}
+
+.auth-footer span,
+.auth-footer a{
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    margin-left:6px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.auth-footer span:hover,
+.auth-footer a:hover{
+
+    color:#14b8a6;
+
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media(max-width:992px){
+
+.register-wrapper{
+
+max-width:700px;
+
+}
+
+.register-title h1{
+
+font-size:36px;
+
+}
+
+.register-cards{
+
+grid-template-columns:1fr;
+
+justify-items:center;
+
+gap:24px;
+
+}
+
+.role-card{
+
+width:100%;
+
+max-width:420px;
+
+min-height:auto;
+
+}
+
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:768px){
+
+.register-wrapper{
+
+padding:0 12px;
+
+}
+
+.register-title{
+
+margin-bottom:30px;
+
+}
+
+.register-title h1{
+
+font-size:32px;
+
+}
+
+.register-title p{
+
+font-size:15px;
+
+}
+
+.role-card{
+
+padding:28px;
+
+}
+
+.role-icon{
+
+width:56px;
+
+height:56px;
+
+font-size:24px;
+
+margin-bottom:18px;
+
+}
+
+.role-card h3{
+
+font-size:22px;
+
+}
+
+.role-description{
+
+font-size:15px;
+
+}
+
+.role-features li{
+
+font-size:14px;
+
+}
+
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:480px){
+
+.register-title h1{
+
+font-size:28px;
+
+}
+
+.register-title p{
+
+font-size:14px;
+
+}
+
+.role-card{
+
+padding:22px;
+
+border-radius:20px;
+
+}
+
+.role-icon{
+
+width:52px;
+
+height:52px;
+
+font-size:22px;
+
+}
+
+.role-card h3{
+
+font-size:20px;
+
+}
+
+.auth-footer{
+
+font-size:15px;
+
+}
+
+}

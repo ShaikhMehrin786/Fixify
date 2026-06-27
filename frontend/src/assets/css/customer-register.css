@@ -1,0 +1,166 @@
+/* ==========================================
+   CUSTOMER REGISTER
+========================================== */
+
+.customer-register-card{
+
+    width:100%;
+    max-width:520px;
+
+}
+
+.customer-form{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+}
+
+/* ==========================================
+   TERMS
+========================================== */
+
+.terms-check{
+
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+
+    margin-top:5px;
+    margin-bottom:8px;
+
+    cursor:pointer;
+
+}
+
+.terms-check input{
+
+    width:18px;
+    height:18px;
+
+    accent-color:#2563eb;
+
+    margin-top:2px;
+
+    cursor:pointer;
+
+}
+
+.terms-check span{
+
+    font-size:15px;
+    color:#64748b;
+    line-height:1.6;
+
+}
+
+.terms-check a{
+
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.terms-check a:hover{
+
+    color:#0f9d8b;
+
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.customer-form .gradient-btn{
+
+    margin-top:10px;
+
+}
+
+/* ==========================================
+   LOGIN LINK
+========================================== */
+
+.login-link{
+
+    margin-top:8px;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:15px;
+
+}
+
+.login-link a{
+
+    margin-left:5px;
+
+    text-decoration:none;
+
+    color:#2563eb;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.login-link a:hover{
+
+    color:#0f9d8b;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+.customer-register-card{
+
+max-width:100%;
+
+}
+
+.customer-form{
+
+gap:16px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.customer-register-card{
+
+width:100%;
+
+}
+
+.terms-check{
+
+align-items:flex-start;
+
+}
+
+.terms-check span{
+
+font-size:14px;
+
+}
+
+.login-link{
+
+font-size:14px;
+
+}
+
+}

@@ -1,0 +1,145 @@
+.worker-register-card{
+
+    width:100%;
+
+    max-width:650px;
+
+}
+
+.worker-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.stepper{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:40px;
+
+}
+
+.step{
+
+    flex:1;
+
+    text-align:center;
+
+    position:relative;
+
+}
+
+.step::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:100%;
+
+    height:2px;
+
+    background:#dbe3eb;
+
+    top:18px;
+
+    left:50%;
+
+    z-index:-1;
+
+}
+
+.step:last-child::after{
+
+    display:none;
+
+}
+
+.step-circle{
+
+    width:38px;
+
+    height:38px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#e5e7eb;
+
+    color:#64748b;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:700;
+
+}
+
+.step.active .step-circle{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.step span{
+
+    display:block;
+
+    margin-top:10px;
+
+    font-size:14px;
+
+}
+
+.step-buttons{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:20px;
+
+}
+
+.step-buttons button{
+
+    min-width:140px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.step-buttons button:first-child{
+
+    background:#e5e7eb;
+
+}
+
+.step-buttons button:last-child{
+
+    background:linear-gradient(90deg,#0f9d8b,#2563eb);
+
+    color:#fff;
+
+}

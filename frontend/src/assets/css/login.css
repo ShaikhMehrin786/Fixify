@@ -1,0 +1,134 @@
+.login-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-card{
+    width:100%;
+    max-width:460px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.auth-options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:-4px;
+}
+
+.auth-options label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:15px;
+    color:#64748b;
+}
+
+.auth-options a{
+    color:#0f9d8b;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.auth-divider{
+    display:flex;
+    align-items:center;
+    margin:22px 0;
+}
+
+.auth-divider::before,
+.auth-divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:#e5e7eb;
+}
+
+.auth-divider span{
+    padding:0 14px;
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.google-btn{
+    width:100%;
+    height:56px;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    background:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.google-btn:hover{
+    background:#f8fafc;
+}
+
+.login-footer{
+    margin-top:6px;
+    text-align:center;
+    color:#64748b;
+    font-size:15px;
+}
+
+.login-footer a{
+    color:#0f9d8b;
+    font-weight:700;
+    text-decoration:none;
+    margin-left:5px;
+}
+.input-group{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.input-group label{
+    display:block;
+    width:100%;
+    font-size:15px;
+    font-weight:600;
+    color:#111827;
+}
+.input-wrapper{
+    position:relative;
+    width:100%;
+}
+
+.input-wrapper input{
+    width:100%;
+    padding:0 50px 0 50px;
+}
+
+.right-icon{
+    position:absolute;
+    top:50%;
+    right:18px;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+.login-card{
+    width:100%;
+    max-width:450px;
+    background:#fff;
+    padding:40px;
+    border-radius:24px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 12px 40px rgba(15,23,42,.08);
+}
+.login-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:calc(100vh - 120px);
+}
