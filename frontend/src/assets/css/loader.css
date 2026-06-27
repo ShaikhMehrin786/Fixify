@@ -1,0 +1,25 @@
+.loader{
+
+    width:22px;
+
+    height:22px;
+
+    border-radius:50%;
+
+    border:3px solid white;
+
+    border-top-color:transparent;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}

@@ -25,9 +25,14 @@ import "./assets/css/auth.css";
 import "./assets/css/register.css";
 
 import "./assets/css/responsive.css";
+import { AuthProvider } from "./context/AuthContext";
+import ToastProvider from "./components/common/ToastProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <AuthProvider>
+      <BrowserRouter>
+          <ToastProvider />
+          <App />
+      </BrowserRouter>
+  </AuthProvider>
 );

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import authService from "../../services/authService";
+
 
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
@@ -22,6 +25,21 @@ function OtpVerification(){
 
         setOtp(copy);
 
+    };
+
+    const handleVerify = async () => {
+        try {
+            await authService.verifyOTP({
+                otp: otp.join("")
+            });
+            toast.success("OTP Verified Successfully!");
+            navigate("/reset-password");
+        } catch (error) {
+            toast.error(
+                error.response?.data?.detail ||
+                "Invalid OTP."
+            );
+        }
     };
 
     return(
@@ -71,12 +89,7 @@ function OtpVerification(){
                     }
 
                 </div>
-
-                <GradientButton
-
-                    onClick={()=>navigate("/reset-password")}
-
-                >
+                <GradientButton onClick={handleVerify}>
 
                     Verify OTP
 

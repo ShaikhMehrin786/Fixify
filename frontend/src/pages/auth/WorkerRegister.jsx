@@ -22,9 +22,13 @@ import "../../assets/css/auth.css";
 import "../../assets/css/worker-register.css";
 import FileUpload from "../../components/auth/FileUpload";
 import ProgressStepper from "../../components/auth/ProgressStepper";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/common/Loader";
+import authService from "../../services/authService";
+import { validateWorker } from "../../utils/validators";
 
 function WorkerRegister() {
-
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -52,33 +56,89 @@ function WorkerRegister() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
 
-        console.log(formData);
+        setLoading(true);
 
-        // TODO:
-        // authService.workerRegister(formData)
+        setError("");
+
+        const message = validateWorker(formData, files);
+
+        if (message) {
+
+            setError(message);
+
+            setLoading(false);
+
+            return;
+
+        }
+
+        try {
+
+            const payload = new FormData();
+
+            payload.append("full_name", formData.full_name);
+            payload.append("email", formData.email);
+            payload.append("phone", formData.phone);
+            payload.append("profession", formData.profession);
+            payload.append("category", formData.category);
+            payload.append("experience", formData.experience);
+            payload.append("address", formData.address);
+            payload.append("city", formData.city);
+            payload.append("aadhaar", formData.aadhaar);
+            payload.append("password", formData.password);
+            payload.append("confirm_password", formData.confirm_password);
+
+            payload.append("profile", files.profile);
+            payload.append("idProof", files.idProof);
+
+            await authService.registerWorker(payload);
+            toast.success("Registration Submitted Successfully!");
+            navigate("/login");
+
+        }
+
+        catch (error) {
+
+            setError(
+
+                error.response?.data?.detail ||
+
+                "Registration failed."
+
+            );
+
+        }
+
+        finally {
+
+            setLoading(false);
+
+        }
+
     };
-        const [files,setFiles]=useState({
+    const [files,setFiles]=useState({
 
-        profile:null,
+      profile:null,
 
-        idProof:null
+      idProof:null
 
-    });
+  });
 
-    const handleFile=(e)=>{
+  const handleFile=(e)=>{
 
-        setFiles({
+      setFiles({
 
-            ...files,
+          ...files,
 
-            [e.target.name]:e.target.files[0]
+          [e.target.name]:e.target.files[0]
 
-        });
+      });
 
-    };
+  };
     const [step,setStep]=useState(1);
 
     const nextStep=()=>{
@@ -92,7 +152,10 @@ function WorkerRegister() {
         setStep(step-1);
 
     };
+    const [loading, setLoading] = useState(false);
 
+    const [error, setError] = useState("");
+    
     return (
         <AuthLayout>
 
@@ -109,7 +172,15 @@ function WorkerRegister() {
                     className="worker-form"
                     onSubmit={handleSubmit}
                 >
-                
+                {
+                  error &&
+
+                  <div className="auth-error">
+
+                      {error}
+
+                  </div>
+              }
                 {step === 1 && (
                   <>
 
@@ -318,9 +389,23 @@ function WorkerRegister() {
 
           ) : (
 
-              <GradientButton>
-                  Create Worker Account
-              </GradientButton>
+              <GradientButton disabled={loading}>
+
+                {
+
+                    loading
+
+                    ?
+
+                    <Loader />
+
+                    :
+
+                    "Create Worker Account"
+
+                }
+
+            </GradientButton>
 
           )}
 

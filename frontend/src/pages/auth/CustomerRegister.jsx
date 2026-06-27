@@ -14,15 +14,21 @@ import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
 import InputField from "../../components/auth/InputField";
 import GradientButton from "../../components/auth/GradientButton";
-
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/common/Loader";
+import authService from "../../services/authService";
+import { validateCustomer } from "../../utils/validators";
 import "../../assets/css/auth.css";
 import "../../assets/css/customer-register.css";
 
 function CustomerRegister() {
 
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState("");
     const [formData, setFormData] = useState({
         full_name: "",
         email: "",
@@ -43,14 +49,51 @@ function CustomerRegister() {
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
-        e.preventDefault();
+      e.preventDefault();
 
-        console.log(formData);
+      setLoading(true);
 
-        // Django API Integration
-        // authService.customerRegister(formData)
+      setError("");
+
+      const message = validateCustomer(formData);
+
+      if (message) {
+
+          setError(message);
+
+          setLoading(false);
+
+          return;
+
+      }
+
+      try {
+
+        await authService.registerCustomer(formData);
+        toast.success("Account Created Successfully!");
+        navigate("/login");
+
+      }
+
+      catch (error) {
+
+          setError(
+
+              error.response?.data?.detail ||
+
+              "Registration failed."
+
+          );
+
+      }
+
+      finally {
+
+          setLoading(false);
+
+      }
 
     };
 
@@ -69,6 +112,15 @@ function CustomerRegister() {
                     className="customer-form"
                     onSubmit={handleSubmit}
                 >
+                  {
+                    error &&
+
+                    <div className="auth-error">
+
+                        {error}
+
+                    </div>
+                }
 
                     <InputField
                         label="Full Name"
@@ -157,12 +209,23 @@ function CustomerRegister() {
 
                     </label>
 
-                    <GradientButton>
+                    <GradientButton disabled={loading}>
 
-                        Create Account
+                      {
 
-                    </GradientButton>
+                          loading
 
+                          ?
+
+                          <Loader />
+
+                          :
+
+                          "Create Account"
+
+                      }
+
+                  </GradientButton>
                     <div className="login-link">
 
                         Already have an account?

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
-
+import toast from "react-hot-toast";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
 import InputField from "../../components/auth/InputField";
@@ -16,15 +16,37 @@ function ForgotPassword(){
 
     const [email,setEmail]=useState("");
 
-    const handleSubmit=(e)=>{
+    const handleSubmit = async (e) => {
 
-        e.preventDefault();
+            e.preventDefault();
 
-        // Backend API
+            try {
 
-        navigate("/verify-otp");
+                await authService.forgotPassword({
 
-    };
+                    email
+
+                });
+
+                toast.success("OTP sent successfully!");
+
+                navigate("/verify-otp");
+
+            }
+
+            catch (error) {
+
+                toast.error(
+
+                    error.response?.data?.detail ||
+
+                    "Failed to send OTP."
+
+                );
+
+            }
+
+        };
 
     return(
 

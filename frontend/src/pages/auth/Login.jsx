@@ -7,20 +7,21 @@ import {
     FaEye,
     FaEyeSlash
 } from "react-icons/fa";
-
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
 import InputField from "../../components/auth/InputField";
 import GradientButton from "../../components/auth/GradientButton";
-
+import Loader from "../../components/common/Loader";
 import "../../assets/css/auth.css";
 import "../../assets/css/login.css";
-
-import authService from "../../services/authService";
+import { validateLogin } from "../../utils/validators";
 
 function Login() {
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [showPassword,setShowPassword]=useState(false);
 
@@ -48,41 +49,33 @@ function Login() {
     };
 
     const handleSubmit=async(e)=>{
-
         e.preventDefault();
 
-        setLoading(true);
+        const message = validateLogin(formData);
 
-        setError("");
+            if (message) {
+
+                setError(message);
+
+                setLoading(false);
+
+                return;
+
+            }
 
         try{
 
-            const response=await authService.login(formData);
+            const user = await login(formData);
+            toast.success("Login Successful!");
+            const role = user.role;
 
-            localStorage.setItem(
-                "access",
-                response.data.access
-            );
-
-            localStorage.setItem(
-                "refresh",
-                response.data.refresh
-            );
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify(response.data.user)
-            );
-
-            const role=response.data.user.role;
-
-            if(role==="customer"){
+            if(role===ROLES.CUSTOMER){
 
                 navigate("/customer/dashboard");
 
             }
 
-            else if(role==="worker"){
+            else if(role===ROLES.WORKER){
 
                 navigate("/worker/dashboard");
 
@@ -98,13 +91,15 @@ function Login() {
 
         catch(error){
 
-            setError(
+            const message =
 
                 error.response?.data?.detail ||
 
-                "Invalid email or password."
+                "Invalid email or password.";
 
-            );
+            setError(message);
+
+            toast.error(message);
 
         }
 
@@ -241,7 +236,7 @@ function Login() {
 
                     </div>
 
-                    <GradientButton>
+                    <GradientButton disabled={loading}>
 
                         {
 
@@ -249,7 +244,7 @@ function Login() {
 
                             ?
 
-                            "Signing In..."
+                            <Loader/>
 
                             :
 

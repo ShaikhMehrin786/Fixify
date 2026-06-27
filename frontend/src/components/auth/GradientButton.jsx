@@ -2,9 +2,11 @@ function GradientButton({
 
     children,
 
-    onClick,
+    type = "submit",
 
-    type = "submit"
+    disabled = false,
+
+    onClick
 
 }) {
 
@@ -15,6 +17,8 @@ function GradientButton({
             type={type}
 
             className="gradient-btn"
+
+            disabled={disabled}
 
             onClick={onClick}
 

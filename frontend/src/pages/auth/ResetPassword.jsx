@@ -9,7 +9,8 @@ FaEye,
 FaEyeSlash
 
 } from "react-icons/fa";
-
+import authService from "../../services/authService";
+import { toast } from "react-toastify";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
 import InputField from "../../components/auth/InputField";
@@ -29,6 +30,38 @@ const [showConfirm,setShowConfirm]=useState(false);
 const [password,setPassword]=useState("");
 
 const [confirm,setConfirm]=useState("");
+
+const handleReset = async () => {
+
+    try {
+
+        await authService.resetPassword({
+
+            password,
+
+            confirm_password: confirm
+
+        });
+
+        toast.success("Password Reset Successfully!");
+
+        navigate("/login");
+
+    }
+
+    catch (error) {
+
+        toast.error(
+
+            error.response?.data?.detail ||
+
+            "Password reset failed."
+
+        );
+
+    }
+
+};
 
 return(
 
@@ -92,11 +125,7 @@ setShowConfirm(!showConfirm)
 
 />
 
-<GradientButton
-
-onClick={()=>navigate("/login")}
-
->
+<GradientButton onClick={handleReset}>
 
 Reset Password
 

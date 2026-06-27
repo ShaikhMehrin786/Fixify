@@ -2,71 +2,140 @@ import api from "./api";
 
 const authService = {
 
-    login(data) {
+    async login(data) {
 
-        return api.post(
-            "/auth/login/",
-            data
-        );
+        try {
 
-    },
+            const response = await api.post(
+                "/auth/login/",
+                data
+            );
 
-    registerCustomer(data) {
+            return response;
 
-        return api.post(
-            "/auth/register/customer/",
-            data
-        );
+        }
 
-    },
+        catch (error) {
 
-    registerWorker(data) {
+            throw error;
 
-        return api.post(
-            "/auth/register/worker/",
-            data
-        );
+        }
 
     },
 
-    forgotPassword(data) {
+    async registerCustomer(data) {
 
-        return api.post(
-            "/auth/forgot-password/",
-            data
-        );
+        try {
 
-    },
+            return await api.post(
+                "/auth/register/customer/",
+                data
+            );
 
-    verifyOTP(data) {
+        }
 
-        return api.post(
-            "/auth/verify-otp/",
-            data
-        );
+        catch (error) {
 
-    },
+            throw error;
 
-    resetPassword(data) {
-
-        return api.post(
-            "/auth/reset-password/",
-            data
-        );
+        }
 
     },
 
-    logout(refresh) {
+    async registerWorker(data) {
 
-        return api.post(
-            "/auth/logout/",
-            {
+        try {
 
-                refresh
+            return await api.post(
+                "/auth/register/worker/",
+                data
+            );
 
-            }
+        }
 
-        );
+        catch (error) {
+
+            throw error;
+
+        }
+
+    },
+
+    async forgotPassword(data) {
+
+        try {
+
+            return await api.post(
+                "/auth/forgot-password/",
+                data
+            );
+
+        }
+
+        catch (error) {
+
+            throw error;
+
+        }
+
+    },
+
+    async verifyOTP(data) {
+
+        try {
+
+            return await api.post(
+                "/auth/verify-otp/",
+                data
+            );
+
+        }
+
+        catch (error) {
+
+            throw error;
+
+        }
+
+    },
+
+    async resetPassword(data) {
+
+        try {
+
+            return await api.post(
+                "/auth/reset-password/",
+                data
+            );
+
+        }
+
+        catch (error) {
+
+            throw error;
+
+        }
+
+    },
+
+    async logout(refresh) {
+
+        try {
+
+            return await api.post(
+                "/auth/logout/",
+                {
+                    refresh
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            throw error;
+
+        }
 
     }
 
