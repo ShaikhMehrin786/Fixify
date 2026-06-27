@@ -1,0 +1,229 @@
+.hero-section{
+
+    padding:170px 0 120px;
+
+    background:linear-gradient(
+        180deg,
+        #F8FAFC,
+        #EEF5FF
+    );
+
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    background:#DBEAFE;
+
+    color:#2563EB;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    margin-bottom:25px;
+
+}
+
+.hero-title{
+
+    font-size:70px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    color:#0F172A;
+
+}
+
+.hero-title span{
+
+    background:linear-gradient(
+        90deg,
+        #2563EB,
+        #14B8A6
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+.hero-description{
+
+    margin:35px auto;
+
+    max-width:750px;
+
+    color:#64748B;
+
+    font-size:22px;
+
+    line-height:1.8;
+
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    margin-bottom:55px;
+
+}
+
+.btn-primary-custom{
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #14B8A6
+    );
+
+    color:white;
+
+    border:none;
+
+    padding:16px 35px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.btn-outline-custom{
+
+    background:white;
+
+    border:2px solid #14B8A6;
+
+    color:#14B8A6;
+
+    padding:16px 35px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+.search-box{
+
+    background:white;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    max-width:800px;
+
+    margin:auto;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.search-input{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    width:100%;
+
+}
+
+.search-input input{
+
+    border:none;
+
+    outline:none;
+
+    width:100%;
+
+    font-size:17px;
+
+}
+
+.location-icon{
+
+    color:#2563EB;
+
+    font-size:22px;
+
+}
+
+.search-btn{
+
+    border:none;
+
+    background:#14B8A6;
+
+    color:white;
+
+    padding:14px 35px;
+
+    border-radius:12px;
+
+}
+
+@media(max-width:992px){
+
+.hero-title{
+
+font-size:48px;
+
+}
+
+.hero-description{
+
+font-size:18px;
+
+}
+
+.hero-buttons{
+
+flex-direction:column;
+
+}
+
+.search-box{
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.search-btn{
+
+width:100%;
+
+}
+
+}

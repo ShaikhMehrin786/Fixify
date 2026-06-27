@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import WorkerProfile
 
 class RequestStatus(models.TextChoices):
     PENDING = "PENDING", "Pending"
@@ -25,6 +26,11 @@ class ServiceCategory(models.Model):
     description = models.TextField(
         blank=True,
         null=True
+    )
+ 
+    icon = models.CharField(
+        max_length=50,
+        default="tools"
     )
 
     created_at = models.DateTimeField(
@@ -153,6 +159,13 @@ class ServiceRequest(models.Model):
         blank=True,
         null=True
     )
+    assigned_worker = models.ForeignKey(
+    WorkerProfile,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name="assigned_requests"
+)
 
     def __str__(self):
         return f"{self.customer.username} - {self.title}"
