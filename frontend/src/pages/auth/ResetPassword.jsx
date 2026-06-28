@@ -124,8 +124,8 @@ setShowConfirm(!showConfirm)
 }
 
 />
-
-<GradientButton onClick={handleReset}>
+<
+GradientButton onClick={handleReset}>
 
 Reset Password
 
