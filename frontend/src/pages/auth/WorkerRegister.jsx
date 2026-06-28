@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
     FaUser,
     FaEnvelope,
@@ -12,7 +12,8 @@ import {
     FaEye,
     FaEyeSlash
 } from "react-icons/fa";
-
+import { useEffect, useState } from "react";
+import { getCategories } from "../../services/categoryService";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
 import InputField from "../../components/auth/InputField";
@@ -31,7 +32,7 @@ function WorkerRegister() {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+    const [categories, setCategories] = useState([]);
     const [formData, setFormData] = useState({
         full_name: "",
         email: "",
@@ -46,6 +47,28 @@ function WorkerRegister() {
         confirm_password: "",
         agree: false
     });
+    useEffect(() => {
+
+    const fetchCategories = async () => {
+
+                try {
+
+                    const data = await getCategories();
+
+                    setCategories(data);
+
+                } catch (error) {
+
+                    console.log(error);
+
+                }
+
+            };
+
+            fetchCategories();
+
+        }, []);
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -80,7 +103,7 @@ function WorkerRegister() {
 
             const payload = new FormData();
 
-            payload.append("full_name", formData.full_name);
+            payload.append("username", formData.full_name);
             payload.append("email", formData.email);
             payload.append("phone", formData.phone);
             payload.append("profession", formData.profession);
@@ -92,8 +115,9 @@ function WorkerRegister() {
             payload.append("password", formData.password);
             payload.append("confirm_password", formData.confirm_password);
 
-            payload.append("profile", files.profile);
-            payload.append("idProof", files.idProof);
+            payload.append("profile_image", files.profile);
+
+            payload.append("verification_document", files.idProof);
 
             await authService.registerWorker(payload);
             toast.success("Registration Submitted Successfully!");
@@ -102,14 +126,19 @@ function WorkerRegister() {
         }
 
         catch (error) {
+            console.log(error.response);
+    console.log(error.response?.data);
 
-            setError(
+    setError(JSON.stringify(error.response?.data));
 
-                error.response?.data?.detail ||
 
-                "Registration failed."
+            // setError(
 
-            );
+            //     error.response?.data?.detail ||
+
+            //     "Registration failed."
+
+            // );
 
         }
 
@@ -244,15 +273,10 @@ function WorkerRegister() {
                         value={formData.category}
                         onChange={handleChange}
                         placeholder="Choose Category"
-                        options={[
-                            "Electrical",
-                            "Plumbing",
-                            "Cleaning",
-                            "Painting",
-                            "Carpentry",
-                            "Appliance Services",
-                            "Home Maintenance"
-                        ]}
+                        options={categories.map(category => ({
+                            value: category.id,
+                            label: category.name
+                        }))}
                     />
 
                     <SelectField
@@ -263,11 +287,12 @@ function WorkerRegister() {
                         onChange={handleChange}
                         placeholder="Choose Experience"
                         options={[
-                            "Fresher",
-                            "1-2 Years",
-                            "3-5 Years",
-                            "5-10 Years",
-                            "10+ Years"
+                            { value: 0, label: "Fresher" },
+                            { value: 1, label: "1 Year" },
+                            { value: 2, label: "2 Years" },
+                            { value: 3, label: "3 Years" },
+                            { value: 5, label: "5 Years" },
+                            { value: 10, label: "10+ Years" }
                         ]}
                     />
 
@@ -364,52 +389,40 @@ function WorkerRegister() {
 
               </>
           )}
-        </form>
-        <div className="step-buttons">
 
-          {step > 1 && (
+    <div className="step-buttons">
 
-              <button
-                  type="button"
-                  onClick={prevStep}
-              >
-                  Previous
-              </button>
+        {step > 1 && (
+            <button
+                type="button"
+                onClick={prevStep}
+            >
+                Previous
+            </button>
+        )}
 
-          )}
+        {step < 3 ? (
 
-          {step < 3 ? (
-            
-              <button
-                  type="button"
-                  onClick={nextStep}
-              >
-                  Next
-              </button>
+            <button
+                type="button"
+                onClick={nextStep}
+            >
+                Next
+            </button>
 
-          ) : (
+        ) : (
 
-              <GradientButton disabled={loading}>
-
-                {
-
-                    loading
-
-                    ?
-
-                    <Loader />
-
-                    :
-
-                    "Create Worker Account"
-
-                }
-
+            <GradientButton
+                disabled={loading}
+            >
+                {loading ? <Loader /> : "Create Worker Account"}
             </GradientButton>
 
-          )}
+        )}
 
-      </div>
+    </div>
+
+</form>
 
       <div className="login-link">
 

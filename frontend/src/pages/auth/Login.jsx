@@ -50,7 +50,8 @@ function Login() {
 
     const handleSubmit=async(e)=>{
         e.preventDefault();
-
+        setLoading(true);
+        setError("")
         const message = validateLogin(formData);
 
             if (message) {
@@ -69,22 +70,14 @@ function Login() {
             toast.success("Login Successful!");
             const role = user.role;
 
-            if(role===ROLES.CUSTOMER){
-
+            if (role === "CUSTOMER") {
                 navigate("/customer/dashboard");
-
             }
-
-            else if(role===ROLES.WORKER){
-
+            else if (role === "WORKER") {
                 navigate("/worker/dashboard");
-
             }
-
-            else{
-
+            else {
                 navigate("/admin/dashboard");
-
             }
 
         }

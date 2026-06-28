@@ -9,6 +9,8 @@ import WorkerRegister from "../pages/auth/WorkerRegister";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import OtpVerification from "../pages/auth/OtpVerification";
 import ResetPassword from "../pages/auth/ResetPassword";
+import CustomerDashboard from "../pages/customer/CustomerDashboard";
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
   return (
@@ -43,6 +45,15 @@ function AppRoutes() {
         <Route
         path="/reset-password"
         element={<ResetPassword/>}
+        />
+
+        <Route
+            path="/customer/dashboard"
+            element={
+                <ProtectedRoute>
+                    <CustomerDashboard />
+                </ProtectedRoute>
+            }
         />
 
     </Routes>

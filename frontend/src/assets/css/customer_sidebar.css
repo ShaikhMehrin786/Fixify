@@ -1,0 +1,129 @@
+.sidebar{
+
+    width:260px;
+
+    background:#ffffff;
+
+    padding:25px;
+
+    border-right:1px solid #e5e7eb;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+}
+
+.sidebar-logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:40px;
+
+}
+
+.logo-circle{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:15px;
+
+    background:linear-gradient(135deg,#0f9d8b,#2563eb);
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:26px;
+
+    font-weight:700;
+
+}
+
+.sidebar-logo h2{
+
+    color:#111827;
+
+}
+
+.sidebar nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.sidebar a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    color:#475569;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.sidebar a.active{
+
+    background:linear-gradient(135deg,#0f9d8b,#2563eb);
+
+    color:white;
+
+}
+
+.sidebar a:hover{
+
+    background:#eef6ff;
+
+    color:#2563eb;
+
+}
+
+.logout-btn{
+
+    border:none;
+
+    background:#ef4444;
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+}

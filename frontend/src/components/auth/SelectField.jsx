@@ -50,19 +50,26 @@ function SelectField({
 
                     {
 
-                        options.map((option,index)=>(
+                        
+                        options.map((option, index) => (
 
                             <option
                                 key={index}
-                                value={option}
+                                value={
+                                    typeof option === "object"
+                                        ? option.value
+                                        : option
+                                }
                             >
-
-                                {option}
-
+                                {
+                                    typeof option === "object"
+                                        ? option.label
+                                        : option
+                                }
                             </option>
 
                         ))
-
+                    
                     }
 
                 </select>

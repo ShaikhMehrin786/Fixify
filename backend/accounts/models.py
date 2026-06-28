@@ -85,6 +85,19 @@ class WorkerProfile(models.Model):
         related_name="worker_profile"
     )
 
+    profession = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    category = models.ForeignKey(
+        "services.ServiceCategory",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="workers"
+    )
+
     experience_years = models.PositiveIntegerField(default=0)
 
     rating = models.DecimalField(
@@ -154,12 +167,19 @@ class WorkerProfile(models.Model):
         blank=True,
         null=True
     )
+
+    city = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
     
     class Meta:
         indexes = [
             models.Index(fields=["status"]),
             models.Index(fields=["is_verified"]),
             models.Index(fields=["is_available"]),
+            models.Index(fields=["category"])
         ]
 
     def __str__(self):

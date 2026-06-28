@@ -1,0 +1,25 @@
+.dashboard-navbar{
+
+    background:#fff;
+
+    padding:25px 35px;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+.dashboard-navbar h2{
+
+    font-size:30px;
+
+    color:#111827;
+
+}
+
+.dashboard-navbar p{
+
+    color:#64748b;
+
+    margin-top:6px;
+
+}

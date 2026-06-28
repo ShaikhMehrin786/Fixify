@@ -6,24 +6,30 @@ from rest_framework_simplejwt.views import (
 )
 
 from .views import (
-    RegisterView,
+    CustomerRegisterView,
+    WorkerRegisterView,
     ProfileView,
     CustomerProfileView,
-    WorkerProfileView,
+    WorkerProfileView,EmailLoginView
 )
 
 urlpatterns = [
 
     path(
-        "register/",
-        RegisterView.as_view(),
-        name="register"
+        "register/customer/",
+        CustomerRegisterView.as_view(),
+        name="customer-register",
+    ),
+    path(
+        "register/worker/",
+        WorkerRegisterView.as_view(),
+        name="worker-register",
     ),
 
     path(
         "login/",
-        TokenObtainPairView.as_view(),
-        name="login"
+        EmailLoginView.as_view(),
+        name="login",
     ),
 
     path(

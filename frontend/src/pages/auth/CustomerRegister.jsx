@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import {
     FaUser,
     FaEnvelope,
@@ -51,51 +51,93 @@ function CustomerRegister() {
 
     const handleSubmit = async (e) => {
 
-      e.preventDefault();
+    e.preventDefault();
 
-      setLoading(true);
+    setLoading(true);
+    setError("");
 
-      setError("");
+    const message = validateCustomer(formData);
 
-      const message = validateCustomer(formData);
+    if (message) {
 
-      if (message) {
+        setError(message);
+        setLoading(false);
+        return;
 
-          setError(message);
+    }
 
-          setLoading(false);
+    const payload = {
 
-          return;
-
-      }
-
-      try {
-
-        await authService.registerCustomer(formData);
-        toast.success("Account Created Successfully!");
-        navigate("/login");
-
-      }
-
-      catch (error) {
-
-          setError(
-
-              error.response?.data?.detail ||
-
-              "Registration failed."
-
-          );
-
-      }
-
-      finally {
-
-          setLoading(false);
-
-      }
+        username: formData.full_name,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
 
     };
+
+    try {
+
+        console.log("Sending:", payload);
+
+        await authService.registerCustomer(payload);
+
+        toast.success("Account Created Successfully!");
+
+        navigate("/login");
+
+    }
+
+    catch (error) {
+
+        console.log(error.response);
+
+        const data = error.response?.data;
+
+        if (data?.username) {
+
+            setError(data.username[0]);
+
+        }
+
+        else if (data?.email) {
+
+            setError(data.email[0]);
+
+        }
+
+        else if (data?.phone) {
+
+            setError(data.phone[0]);
+
+        }
+
+        else if (data?.password) {
+
+            setError(data.password[0]);
+
+        }
+
+        else if (data?.detail) {
+
+            setError(data.detail);
+
+        }
+
+        else {
+
+            setError("Registration failed.");
+
+        }
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+};
 
     return (
 
