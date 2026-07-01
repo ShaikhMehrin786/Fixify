@@ -1,4 +1,5 @@
 import axios from "axios";
+import tokenService from "./tokenService";
 
 const api = axios.create({
 
@@ -6,24 +7,82 @@ const api = axios.create({
 
 });
 
-api.interceptors.request.use(
+api.interceptors.response.use(
 
-    (config) => {
+    response=>response,
 
-        const token = localStorage.getItem("access");
+    async(error)=>{
 
-        if (token) {
+    const originalRequest=error.config;
 
-            config.headers.Authorization = `Bearer ${token}`;
+    if(
+
+    error.response?.status===401 &&
+
+    !originalRequest._retry
+
+    ){
+
+        originalRequest._retry=true;
+
+        try{
+
+            const refresh=tokenService.getRefreshToken();
+
+            const response=await axios.post(
+
+            `${import.meta.env.VITE_API_URL}/auth/refresh/`,
+
+            {
+
+                refresh
+
+            }
+
+            );
+
+            tokenService.saveTokens(
+
+                response.data.access,
+
+                refresh
+
+            );
+
+            originalRequest.headers.Authorization=
+
+            `Bearer ${response.data.access}`;
+
+            return api(originalRequest);
 
         }
 
-        return config;
+        catch{
 
-    },
+            tokenService.removeTokens();
 
-    (error) => Promise.reject(error)
+            window.location.href="/login";
 
-);
+        }
 
+    }
+
+    return Promise.reject(error);
+
+    }
+
+    );
+api.interceptors.request.use((config) => {
+
+    const token = tokenService.getAccessToken();
+
+    if (token) {
+
+        config.headers.Authorization = `Bearer ${token}`;
+
+    }
+
+    return config;
+
+});
 export default api;

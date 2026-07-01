@@ -14,15 +14,35 @@ class CustomerRegisterSerializer(serializers.ModelSerializer):
         min_length=8
     )
 
+    confirm_password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = [
-            "username",
             "email",
             "phone",
-            "password"
+            "password",
+            "confirm_password"
         ]
 
+    def validate(self, attrs):
+        if attrs["password"] != attrs["confirm_password"]:
+            raise serializers.ValidationError({
+                "confirm_password": "Passwords do not match."
+            })
+        
+        if User.objects.filter(email=attrs["email"]).exists():
+            raise serializers.ValidationError({
+                "email": "User already exists. Please login."
+            })
+
+        if User.objects.filter(phone=attrs["phone"]).exists():
+            raise serializers.ValidationError({
+                "phone": "Phone number already registered."
+            })
+
+        return attrs
+    
     def validate_phone(self, value):
 
         if not value.isdigit():
@@ -39,20 +59,30 @@ class CustomerRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
+        confirm_password = validated_data.pop("confirm_password")
         password = validated_data.pop("password")
 
+        email = validated_data["email"]
+
+        username = email.split("@")[0]
+
+        while User.objects.filter(username=username).exists():
+            username = f"{username}_{User.objects.count()+1}"
+
         user = User(
-            **validated_data,
-            role="CUSTOMER"
+            username=username,
+            role="CUSTOMER",
+            **validated_data
         )
 
         user.set_password(password)
+
         user.save()
 
+        CustomerProfile.objects.get_or_create(user=user)
+
         return user
-    
-from rest_framework import serializers
-from .models import User, WorkerProfile
+
 
 class WorkerRegisterSerializer(serializers.ModelSerializer):
 
@@ -75,7 +105,6 @@ class WorkerRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "username",
             "email",
             "phone",
             "password",
@@ -96,9 +125,19 @@ class WorkerRegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"confirm_password": "Passwords do not match"}
             )
+        
+        if User.objects.filter(email=attrs["email"]).exists():
+            raise serializers.ValidationError({
+                "email": "User already exists. Please login."
+            })
+
+        if User.objects.filter(phone=attrs["phone"]).exists():
+            raise serializers.ValidationError({
+                "phone": "Phone number already registered."
+            })
 
         return attrs
-
+    
     def create(self, validated_data):
 
         validated_data.pop("confirm_password")
@@ -122,7 +161,15 @@ class WorkerRegisterSerializer(serializers.ModelSerializer):
 
         password = validated_data.pop("password")
 
+        email = validated_data["email"]
+
+        username = email.split("@")[0]
+
+        while User.objects.filter(username=username).exists():
+            username = f"{username}_{User.objects.count()+1}"
+
         user = User(
+            username=username,
             role="WORKER",
             **validated_data
         )
@@ -131,16 +178,17 @@ class WorkerRegisterSerializer(serializers.ModelSerializer):
         user.profile_image = profile_image
         user.save()
 
-        worker = user.worker_profile
-
-        worker.experience_years = experience
-        worker.aadhaar_number = aadhaar
-        worker.current_address = address
-        worker.verification_document = verification_document
+        worker,created = WorkerProfile.objects.get_or_create(
+            user=user
+        )
 
         worker.profession = profession
-        worker.city = city
         worker.category = category
+        worker.experience_years = experience
+        worker.current_address = address
+        worker.city = city
+        worker.aadhaar_number = aadhaar
+        worker.verification_document = verification_document
 
         worker.save()
 
@@ -183,33 +231,70 @@ class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     username_field = "email"
 
+    # def validate(self, attrs):
+
+    #     email = attrs.get("email")
+    #     password = attrs.get("password")
+
+    #     try:
+    #         user = User.objects.get(email=email)
+    #     except User.DoesNotExist:
+    #         raise serializers.ValidationError("Invalid email or password.")
+
+    #     user = authenticate(
+    #         username=user.username,
+    #         password=password
+    #     )
+
+    #     if user is None:
+    #         raise serializers.ValidationError("Invalid email or password.")
+
+    #     refresh = self.get_token(user)
+
+    #     return {
+    #         "refresh": str(refresh),
+    #         "access": str(refresh.access_token),
+    #         "user": {
+    #             "id": user.id,
+    #             "username": user.username,
+    #             "email": user.email,
+    #             "role": user.role,
+    #         }
+    #     }
     def validate(self, attrs):
 
         email = attrs.get("email")
         password = attrs.get("password")
 
+        print("EMAIL:", email)
+
         try:
             user = User.objects.get(email=email)
+            print("FOUND USER:", user.username)
+            print("IS ACTIVE:", user.is_active)
+            print("CHECK PASSWORD:", user.check_password(password))
         except User.DoesNotExist:
             raise serializers.ValidationError("Invalid email or password.")
 
-        user = authenticate(
+        auth_user = authenticate(
             username=user.username,
             password=password
         )
 
-        if user is None:
+        print("AUTHENTICATE:", auth_user)
+
+        if auth_user is None:
             raise serializers.ValidationError("Invalid email or password.")
 
-        refresh = self.get_token(user)
+        refresh = self.get_token(auth_user)
 
         return {
             "refresh": str(refresh),
             "access": str(refresh.access_token),
             "user": {
-                "id": user.id,
-                "username": user.username,
-                "email": user.email,
-                "role": user.role,
+                "id": auth_user.id,
+                "username": auth_user.username,
+                "email": auth_user.email,
+                "role": auth_user.role,
             }
         }

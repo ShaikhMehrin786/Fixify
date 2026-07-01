@@ -20,6 +20,7 @@ import authService from "../../services/authService";
 import { validateCustomer } from "../../utils/validators";
 import "../../assets/css/auth.css";
 import "../../assets/css/customer-register.css";
+import tokenService from "../../services/tokenService";
 
 function CustomerRegister() {
 
@@ -68,34 +69,56 @@ function CustomerRegister() {
 
     const payload = {
 
-        username: formData.full_name,
         email: formData.email,
         phone: formData.phone,
-        password: formData.password
-
+        password: formData.password,
+        confirm_password: formData.confirm_password
     };
 
     try {
 
         console.log("Sending:", payload);
-
         await authService.registerCustomer(payload);
 
-        toast.success("Account Created Successfully!");
+        const loginResponse = await authService.login({
 
-        navigate("/login");
+            email: formData.email,
+
+            password: formData.password
+
+        });
+
+        tokenService.saveTokens(
+
+            loginResponse.data.access,
+
+            loginResponse.data.refresh
+
+        );
+
+        localStorage.setItem(
+
+            "user",
+
+            JSON.stringify(loginResponse.data.user)
+
+        );
+
+        toast.success("Welcome to Fixify!");
+
+        navigate("/customer/dashboard");
 
     }
 
     catch (error) {
 
-        console.log(error.response);
-
         const data = error.response?.data;
 
-        if (data?.username) {
+        console.log(data);
 
-            setError(data.username[0]);
+        if (data?.confirm_password) {
+
+            setError(data.confirm_password[0]);
 
         }
 

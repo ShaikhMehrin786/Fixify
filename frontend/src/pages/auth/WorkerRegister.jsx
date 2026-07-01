@@ -102,8 +102,6 @@ function WorkerRegister() {
         try {
 
             const payload = new FormData();
-
-            payload.append("username", formData.full_name);
             payload.append("email", formData.email);
             payload.append("phone", formData.phone);
             payload.append("profession", formData.profession);
@@ -120,26 +118,58 @@ function WorkerRegister() {
             payload.append("verification_document", files.idProof);
 
             await authService.registerWorker(payload);
-            toast.success("Registration Submitted Successfully!");
-            navigate("/login");
 
+            const loginResponse = await authService.login({
+
+                email: formData.email,
+
+                password: formData.password
+
+            });
+
+            tokenService.saveTokens(
+
+                loginResponse.data.access,
+
+                loginResponse.data.refresh
+
+            );
+
+            localStorage.setItem(
+
+                "user",
+
+                JSON.stringify(loginResponse.data.user)
+
+            );
+
+            toast.success("Welcome to Fixify!");
+
+            navigate("/worker/dashboard");
         }
 
         catch (error) {
             console.log(error.response);
-    console.log(error.response?.data);
+            console.log(error.response?.data);
 
-    setError(JSON.stringify(error.response?.data));
+            const data = error.response?.data;
 
-
-            // setError(
-
-            //     error.response?.data?.detail ||
-
-            //     "Registration failed."
-
-            // );
-
+            if (data?.email) {
+                toast.error(data.email[0]);
+                setError(data.email[0]);
+            }
+            else if (data?.phone) {
+                toast.error(data.phone[0]);
+                setError(data.phone[0]);
+            }
+            else if (data?.confirm_password) {
+                toast.error(data.confirm_password[0]);
+                setError(data.confirm_password[0]);
+            }
+            else {
+                toast.error("Registration failed.");
+                setError("Registration failed.");
+            }
         }
 
         finally {

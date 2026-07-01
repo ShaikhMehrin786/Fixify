@@ -8,7 +8,7 @@ import {
     FaEyeSlash
 } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useAuth } from "../../context/AuthContext";
+import authService from "../../services/authService";
 import AuthLayout from "../../components/auth/AuthLayout";
 import AuthHeader from "../../components/auth/AuthHeader";
 import InputField from "../../components/auth/InputField";
@@ -17,11 +17,10 @@ import Loader from "../../components/common/Loader";
 import "../../assets/css/auth.css";
 import "../../assets/css/login.css";
 import { validateLogin } from "../../utils/validators";
-
+import tokenService from "../../services/tokenService";
 function Login() {
 
     const navigate = useNavigate();
-    const { login } = useAuth();
 
     const [showPassword,setShowPassword]=useState(false);
 
@@ -66,9 +65,17 @@ function Login() {
 
         try{
 
-            const user = await login(formData);
+            const user = await authService.login(formData);
+            tokenService.saveTokens(
+                user.data.access,
+                user.data.refresh
+            );
+            localStorage.setItem(
+                "user",
+                JSON.stringify(user.data.user)
+            );
             toast.success("Login Successful!");
-            const role = user.role;
+            const role = user.data.user.role;
 
             if (role === "CUSTOMER") {
                 navigate("/customer/dashboard");

@@ -12,13 +12,13 @@ export const validateLogin = (data) => {
 
     }
 
-    if (!data.password) {
+    if (!data.password.trim()) {
 
         return "Password is required.";
 
     }
 
-    if (data.password.length < 8) {
+    if (data.password.trim().length<8) {
 
         return "Password must be at least 8 characters.";
 
@@ -48,13 +48,13 @@ export const validateCustomer = (data) => {
 
     }
 
-    if (data.password.length < 8) {
+    if (data.password.trim().length < 8) {
 
         return "Password must be at least 8 characters.";
 
     }
 
-    if (data.password !== data.confirm_password) {
+    if (data.password.trim() !== data.confirm_password.trim()) {
 
         return "Passwords do not match.";
 
@@ -114,7 +114,7 @@ export const validateWorker = (data, files) => {
 
     }
 
-    if (data.password !== data.confirm_password) {
+    if (data.password.trim() !== data.confirm_password.trim()) {
 
         return "Passwords do not match.";
 
