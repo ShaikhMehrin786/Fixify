@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db import transaction
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from services.models import ServiceCategory
@@ -137,7 +138,7 @@ class WorkerRegisterSerializer(serializers.ModelSerializer):
             })
 
         return attrs
-    
+    @transaction.atomic
     def create(self, validated_data):
 
         validated_data.pop("confirm_password")

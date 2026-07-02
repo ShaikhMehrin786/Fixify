@@ -118,9 +118,7 @@ class WorkerProfile(models.Model):
 
     aadhaar_number = models.CharField(
         max_length=12,
-        unique=True,
-        blank=True,
-        null=True
+        unique=True
     )
 
     verification_document = models.FileField(

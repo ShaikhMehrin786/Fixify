@@ -26,6 +26,7 @@ import ProgressStepper from "../../components/auth/ProgressStepper";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/common/Loader";
 import authService from "../../services/authService";
+import tokenService from "../../services/tokenService";
 import { validateWorker } from "../../utils/validators";
 
 function WorkerRegister() {
